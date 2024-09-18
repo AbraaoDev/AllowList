@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import { AggregatedRecord, aggregatedData } from "../utils/loadExcel";
+import type { Request, Response } from "express";
+import { type AggregatedRecord, aggregatedData } from "../utils/loadExcel";
 
 export function consultaProcessoPorCPF(req: Request, res: Response) {
   const { cpf } = req.body;
@@ -20,9 +20,9 @@ export function consultaProcessoPorCPF(req: Request, res: Response) {
       return res.status(500).send("Erro ao acessar dados do processo.");
     }
 
-    const limiteAceitacao = 1.33;
+    const limiteAceitacao = 1;
 
-    if (mediaVezesVoltou <= limiteAceitacao) {
+    if (mediaVezesVoltou < limiteAceitacao) {
       res.send(
         `${requerente["Nome do requerente"]}. Este usuário está no raio de aceitação! Média de vezes que voltou: ${mediaVezesVoltou}.`
       );
