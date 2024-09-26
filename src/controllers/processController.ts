@@ -22,15 +22,11 @@ export function consultaProcessoPorCPF(req: Request, res: Response) {
 
     const limiteAceitacao = 1;
 
-    if (mediaVezesVoltou < limiteAceitacao) {
-      res.send(
-        `${requerente["Nome do requerente"]}. Este usuário está no raio de aceitação! Média de vezes que voltou: ${mediaVezesVoltou}.`
-      );
-    } else {
-      res.send(
-        `${requerente["Nome do requerente"]} não está no raio de aceitação. Média de vezes que voltou: ${mediaVezesVoltou}.`
-      );
-    }
+    return res.json({
+      name: requerente["Nome do requerente"],
+      average: mediaVezesVoltou,
+      acceptAt: mediaVezesVoltou < limiteAceitacao, // true se estiver abaixo do limite, false caso contrário
+    });
   } else {
     res.status(404).send("CPF não encontrado.");
   }
